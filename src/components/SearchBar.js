@@ -1,44 +1,27 @@
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
+import { SearchContext } from "../context/SearchContext";
 function SearchBar(props) {
-  let [searchTerm, setSearchTerm] = useState("");
+  const { term, handleSearch } = useContext(SearchContext);
+  // const context = useContext(SearchContext)
 
-  const internalSearch = (e) => {
-    props.handleSearch(e, searchTerm);
-    // setSearchTerm("");
-  };
+
+  // context.term
+
+  // context.handleSearch
+
 
   return (
-    <form onSubmit={(e) => internalSearch(e)}>
+    <form>
       <input
-        value={searchTerm}
-        id="search_bar"
+        ref={term}
         type="text"
         placeholder="Enter a search term here"
-        onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <input type="submit" />
+
+      <button onClick={(e) => handleSearch(e, term.current.value)}>Submit</button>
+      
     </form>
   );
 }
 
 export default SearchBar;
-
-// import { useState } from "react";
-
-// function SearchBar(props) {
-//   // We can comment out our searchTerm state variable as we are not using it!
-//   // let [searchTerm, setSearchTerm] = useState('')
-
-//   return (
-//     <form>
-//       <input
-//         type="text"
-//         placeholder="Search Here"
-//         onChange={(e) => props.handleSearch(e, e.target.value)}
-//       />
-//       {/* <input type="submit" /> */}
-//     </form>
-//   );
-// }
-
-// export default SearchBar;
