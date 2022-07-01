@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Gallery from "./components/Gallery";
 import SearchBar from "./components/SearchBar";
+import { DataContext } from "./context/DataContext";
 
 const App = () => {
   let [search, setSearch] = useState("");
@@ -17,9 +18,8 @@ const App = () => {
         const resData = await response.json();
         if (resData.results.length > 0) {
           // setMessage(`${}`)
-          console.log(resData)
+          console.log(resData);
           return setData(resData.results);
-        
         } else {
           return setMessage("Not Found.");
         }
@@ -37,7 +37,9 @@ const App = () => {
     <div>
       <SearchBar handleSearch={handleSearch} />
       {message}
-      <Gallery data={data} />
+      <DataContext.Provider value={data}>
+        <Gallery />
+      </DataContext.Provider>
     </div>
   );
 };
